@@ -4,12 +4,13 @@ import games.baseball as baseball
 
 
 def test_make_answer_unique_digits():
-    """정답은 중복 없는 3자리 숫자여야 한다."""
+    """정답은 중복 없는 3자리 숫자여야 한다. (첫 자리는 0이 아님)"""
     for _ in range(100):
         ans = baseball.make_answer()
         assert len(ans) == 3
         assert len(set(ans)) == 3
         assert ans.isdigit()
+        assert ans[0] != "0"
 
 
 def test_judge_all_strike():
@@ -35,10 +36,8 @@ def test_judge_edge_cases():
     assert baseball.judge("012", "210") == (1, 2)
 
 
-def test_make_answer_can_start_with_zero():
-    """정답이 0으로 시작할 수 있다."""
+def test_make_answer_cannot_start_with_zero():
+    """정답의 첫 자리는 0이 될 수 없다."""
     for _ in range(1000):
         ans = baseball.make_answer()
-        assert len(ans) == 3
-        assert len(set(ans)) == 3
-        assert ans.isdigit()
+        assert ans[0] != "0"

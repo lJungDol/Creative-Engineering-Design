@@ -17,8 +17,10 @@ MAX_ATTEMPTS = 9
 
 
 def make_answer() -> str:
-    """서로 다른 숫자 3개로 이루어진 정답을 생성한다."""
-    digits = random.sample("0123456789", 3)
+    """서로 다른 숫자 3개로 이루어진 정답을 생성한다. (첫 자리는 0이 아님)"""
+    first = random.choice("123456789")
+    remaining = [d for d in "0123456789" if d != first]
+    digits = [first] + random.sample(remaining, 2)
     return "".join(digits)
 
 
@@ -37,9 +39,9 @@ def play() -> None:
     for attempt in range(1, MAX_ATTEMPTS + 1):
         while True:
             guess = input(f"{attempt}번째 추측 (3자리 숫자): ").strip()
-            if len(guess) == 3 and guess.isdigit():
+            if len(guess) == 3 and guess.isdigit() and guess[0] != "0":
                 break
-            print("3자리 숫자를 입력하세요. (0으로 시작하는 숫자도 가능합니다.)")
+            print("3자리 숫자를 입력하세요. (첫 자리는 0이 될 수 없습니다.)")
 
         strike, ball = judge(answer, guess)
 
