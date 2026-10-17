@@ -33,3 +33,12 @@ def test_judge_edge_cases():
     """0이 포함된 경우도 정상 동작해야 한다."""
     assert baseball.judge("012", "012") == (3, 0)
     assert baseball.judge("012", "210") == (1, 2)
+
+
+def test_make_answer_can_start_with_zero():
+    """정답이 0으로 시작할 수 있다."""
+    for _ in range(1000):
+        ans = baseball.make_answer()
+        assert len(ans) == 3
+        assert len(set(ans)) == 3
+        assert ans.isdigit()

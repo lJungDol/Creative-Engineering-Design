@@ -12,8 +12,6 @@
 
 import random
 
-from utils import ask_int
-
 GAME_NAME = "숫자 야구"
 MAX_ATTEMPTS = 9
 
@@ -37,10 +35,13 @@ def play() -> None:
     print(f"[{GAME_NAME}] 게임을 시작합니다! (기회: {MAX_ATTEMPTS}번)")
 
     for attempt in range(1, MAX_ATTEMPTS + 1):
-        guess = ask_int(f"{attempt}번째 추측 (3자리 숫자): ", 100, 999)
-        guess_str = str(guess)
+        while True:
+            guess = input(f"{attempt}번째 추측 (3자리 숫자): ").strip()
+            if len(guess) == 3 and guess.isdigit():
+                break
+            print("3자리 숫자를 입력하세요. (0으로 시작하는 숫자도 가능합니다.)")
 
-        strike, ball = judge(answer, guess_str)
+        strike, ball = judge(answer, guess)
 
         if strike == 3:
             print(f"정답입니다! {attempt}번 만에 맞췄습니다. 정답: {answer}")
